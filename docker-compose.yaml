@@ -8,14 +8,15 @@ services:
     volumes:
       - ./java_export:/home/java_export
     command: java -jar /home/java_export/sort.jar
-    ports:
-      - "8080:8080/tcp"
     depends_on:
       - mysql
       - redis
-    networks:
-      prod_line:
-        ipv4_address: 10.8.105.2
+    network_mode: host
+    # ports:
+    #   - "8080:8080/tcp"
+    # networks:
+    #   prod_line:
+    #     ipv4_address: 10.8.105.2
     healthcheck:
       test: ["CMD-SHELL", "curl --silent --fail localhost:8080/sort/health || exit 1"]
       interval: 10s
@@ -23,7 +24,7 @@ services:
       retries: 3
   mysql:
     image: mysql:8.0
-    container_name: mysql
+    container_name: mysql_jinli
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -32,11 +33,12 @@ services:
       - ./data:/var/lib/mysql
     command:
       --max_connections=1000
-    ports:
-      - "3306:3306/tcp"
-    networks:
-      prod_line:
-        ipv4_address: 10.8.105.3
+    network_mode: host
+    # ports:
+    #   - "3306:3306/tcp"
+    # networks:
+    #   prod_line:
+    #     ipv4_address: 10.8.105.3
     healthcheck:
       test: ["CMD-SHELL", "curl --silent localhost:3306 >/dev/null || exit 1"]
       interval: 10s
@@ -44,15 +46,16 @@ services:
       retries: 3
   redis:
     image: redis/redis-stack:latest
-    container_name: redis
-    ports:
-      - "6379:6379"
-    networks:
-      prod_line:
-        ipv4_address: 10.8.105.4
+    container_name: redis_jinli
+    network_mode: host
+    # ports:
+    #   - "6379:6379"
+    # networks:
+    #   prod_line:
+    #     ipv4_address: 10.8.105.4
 
-networks:
-  prod_line:
-    driver: bridge
-    config:
-        - subnet: 10.8.105.0/24
+# networks:
+#   prod_line:
+#     driver: bridge
+#     config:
+#         - subnet: 10.8.105.0/24
