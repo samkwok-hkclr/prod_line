@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./java_export:/java_export
-    command: java -jar /java_export/sort.jar
+    command: ["java", "-jar", "/java_export/sort.jar"]
     depends_on:
       - mysql
       - redis
