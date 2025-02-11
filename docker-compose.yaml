@@ -4,7 +4,7 @@ services:
   jar:
     image: anapsix/alpine-java:latest
     container_name: prod_line
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./java_export:/java_export
     command: java -jar /java_export/sort.jar
@@ -25,7 +25,7 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql_jinli
-    restart: always
+    restart: unless-stopped
     environment:
       # MYSQL_DATABASE: zsh_sort
       MYSQL_ROOT_PASSWORD: root
@@ -51,6 +51,7 @@ services:
     image: redis/redis-stack:latest
     container_name: redis_jinli
     network_mode: host
+    restart: unless-stopped
     # ports:
     #   - "6379:6379"
     # networks:
