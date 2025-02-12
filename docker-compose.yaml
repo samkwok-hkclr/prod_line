@@ -31,10 +31,10 @@ services:
       MYSQL_ROOT_PASSWORD: root
       TZ: Asia/Hong_Kong
     volumes:
-      - ./data:/var/lib/mysql
+      - ./.data:/var/lib/mysql
       # - ./zsh_sort.sql:/docker-entrypoint-initdb.d/init.sql
-    # command:
-    #   --max_connections=1000
+    command:
+      --max_connections=1000
     network_mode: host
     privileged: true
     # ports:
